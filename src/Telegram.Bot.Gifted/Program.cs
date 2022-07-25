@@ -16,10 +16,10 @@ internal sealed class Program
         await startup.ConfigureAsync();
         await startup.RunAsync();
 
-        await WaitCtrlPlusC();
+        await WaitCtrlPlusCAsync();
     }
 
-    private static async Task WaitCtrlPlusC()
+    private static async Task WaitCtrlPlusCAsync()
     {
         var waiter = new TaskCompletionSource();
         Console.CancelKeyPress += (obj, consoleArgs) =>

@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.Configuration;
-using Telegram.Bot.Gifted.Core;
 
 namespace Telegram.Bot.Gifted;
 
@@ -12,15 +11,24 @@ internal sealed class Program
             .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
             .Build();
 
-        var startUp = new Startup(configuration);
-        await startUp.ConfigureAsync();
-        await startUp.Run();
+        var startup = new Startup(configuration);
+
+        await startup.ConfigureAsync();
+        await startup.RunAsync();
+
+        await WaitCtrlPlusC();
+    }
+
+    private static async Task WaitCtrlPlusC()
+    {
         var waiter = new TaskCompletionSource();
         Console.CancelKeyPress += (obj, consoleArgs) =>
         {
+            Console.WriteLine("Ctrl + C is called.");
             waiter.SetResult();
         };
 
         await waiter.Task;
+        Console.WriteLine("Bot is stopped.");
     }
 }

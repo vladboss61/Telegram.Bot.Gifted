@@ -5,12 +5,12 @@ using Telegram.Bot.Gifted.Core.Commands;
 using Telegram.Bot.Polling;
 
 namespace Telegram.Bot.Gifted;
-internal class Startup
+
+internal sealed class Startup
 {
     private readonly IServiceCollection _services;
     private readonly IConfiguration _configuration;
 
-    private readonly BotConfiguration _botConfiguration;
     private readonly TelegramBotClient _telegramBot;
 
 
@@ -19,8 +19,8 @@ internal class Startup
         _services = new ServiceCollection();
         _configuration = configuration;
 
-        _botConfiguration = configuration.Get<BotConfiguration>();
-        _telegramBot = new TelegramBotClient(_botConfiguration.BotToken);
+        var botConfiguration = configuration.Get<BotConfiguration>();
+        _telegramBot = new TelegramBotClient(botConfiguration.BotToken);
     }
 
     public Task ConfigureAsync() => Task.Run(() =>
@@ -35,9 +35,8 @@ internal class Startup
         return Task.CompletedTask;
     });
 
-    public Task Run() => Task.Run(() =>
+    public Task RunAsync() => Task.Run(() =>
     {
-
         _telegramBot.StartReceiving(_services
             .BuildServiceProvider()
             .GetRequiredService<IUpdateHandler>());

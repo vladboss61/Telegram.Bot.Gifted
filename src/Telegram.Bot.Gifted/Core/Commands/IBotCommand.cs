@@ -7,5 +7,5 @@ public interface IBotCommand
 {
     public MessageType MessageType { get; }
 
-    public Task ExecuteAsync(Update update, CancellationToken cancellationToken);
+    public Task ExecuteAsync(Message message, CancellationToken cancellationToken);
 }

@@ -14,12 +14,12 @@ internal sealed class TextBotCommand : IBotCommand
 
     public MessageType MessageType => MessageType.Text;
 
-    public async Task ExecuteAsync(Update update, CancellationToken cancellationToken)
+    public async Task ExecuteAsync(Message message, CancellationToken cancellationToken)
     {
         await using var audioStream = System.IO.File.OpenRead(@$"{Directory.GetCurrentDirectory()}/Resources/default-audio-response.ogg");
 
         await _botClient.SendVoiceAsync(
-            chatId: new ChatId(update.Message!.Chat.Id),
+            chatId: new ChatId(message.Chat.Id),
             voice: audioStream,
             cancellationToken: cancellationToken);
     }

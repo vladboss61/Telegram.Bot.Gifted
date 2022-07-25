@@ -15,10 +15,10 @@ internal sealed class StickerBotCommand : IBotCommand
 
     public MessageType MessageType => MessageType.Sticker;
 
-    public async Task ExecuteAsync(Update update, CancellationToken cancellationToken)
+    public async Task ExecuteAsync(Message message, CancellationToken cancellationToken)
     {
         await _botClient.SendStickerAsync(
-            chatId: new ChatId(update.Message!.Chat.Id),
+            chatId: new ChatId(message.Chat.Id),
             StickerUrl,
             cancellationToken: cancellationToken);
     }

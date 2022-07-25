@@ -13,7 +13,6 @@ internal sealed class Startup
 
     private readonly TelegramBotClient _telegramBot;
 
-
     public Startup(IConfiguration configuration)
     {
         _services = new ServiceCollection();

@@ -18,6 +18,7 @@ public sealed class GiftedUpdateHandler : IUpdateHandler
     {
         if (update?.Message is null)
         {
+            Console.WriteLine("Log message: The Gifted Bot is not responsible to handle incoming input without message.");
             return;
         }
 
@@ -28,18 +29,18 @@ public sealed class GiftedUpdateHandler : IUpdateHandler
 
         if (command is null)
         {
-            Console.WriteLine($"Message: Bot can not process command {update.Message.Type}.");
+            Console.WriteLine($"Log message: Bot can not process command {update.Message.Type}.");
             return;
         }
 
-        await command.ExecuteAsync(update, cancellationToken);
+        await command.ExecuteAsync(update.Message, cancellationToken);
 
-        Console.WriteLine("Message: HandleUpdateAsync is executed.");
+        Console.WriteLine("Log message: HandleUpdateAsync is executed.");
     }
 
     public Task HandlePollingErrorAsync(ITelegramBotClient botClient, Exception exception, CancellationToken cancellationToken)
     {
-        Console.WriteLine("Message: Something went wrong.");
+        Console.WriteLine("Log message: Something went wrong.");
         throw exception;
     }
 }
